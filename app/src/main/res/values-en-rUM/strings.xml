@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FootyMatch</string>
+    <string name="write_name">Write your name</string>
+    <string name="write_email">Write your e-mail</string>
+    <string name="write_password">Write your password</string>
+    <string name="repeat_write_password">ReWrite your password</string>
+
+    <string name="login_button">Login</string>
+    <string name="forgot_password">Forgot my  password</string>
+    <string name="new_user">I\'m new</string>
+    <string name="create_account">Create account</string>
+
+    <string name="create_account1">Crear cuenta</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="recover_account">Recover account</string>
+    <string name="next_recover_account">Next</string>
+
+</resources>

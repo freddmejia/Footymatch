@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FootyMatch</string>
+    <string name="write_name">Escribe tu nombre</string>
+    <string name="write_email">Escribe tu e-mail</string>
+    <string name="write_password">Escribe tu contraseña</string>
+    <string name="repeat_write_password">Repite tu contraseña</string>
+
+    <string name="login_button">Ingresar</string>
+    <string name="forgot_password">Olvidé mi contraseña</string>
+    <string name="new_user">Soy nuevo</string>
+    <string name="create_account">Crear cuenta</string>
+
+    <string name="create_account1">Crear cuenta</string>
+    <string name="register">Registro</string>
+    <string name="login">Login</string>
+    <string name="recover_account">Recuperar cuenta</string>
+    <string name="next_recover_account">Siguiente</string>
+
+</resources>
