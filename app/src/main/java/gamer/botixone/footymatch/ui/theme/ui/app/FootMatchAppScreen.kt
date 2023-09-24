@@ -2,7 +2,9 @@ package gamer.botixone.footymatch.ui.theme.ui.app
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -13,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -31,7 +34,9 @@ import gamer.botixone.footymatch.ui.theme.ui.account.RegisterScreen
 import gamer.botixone.footymatch.ui.theme.ui.enumerates.FootMatchMenuScreen
 import gamer.botixone.footymatch.ui.theme.ui.viewmodel.LoginViewModel
 
-
+@ExperimentalComposeUiApi
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @Preview
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -63,7 +68,6 @@ fun FootMachScreen(
                 route = FootMatchMenuScreen.Login.name
             ){
                 LoginScreen(
-                    viewModel = LoginViewModel(),
                     registerOnClicked = {
                         Log.e(TAG, "FootMachScreen: register" )
                         navController.navigate(FootMatchMenuScreen.Register.name)

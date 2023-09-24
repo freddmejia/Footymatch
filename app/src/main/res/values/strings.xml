@@ -15,5 +15,9 @@
     <string name="login">Login</string>
     <string name="recover_account">Recuperar cuenta</string>
     <string name="next_recover_account">Siguiente</string>
+    <string name="shared_preferences">botix_game_dev.ecu.footy.match</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="error">Error</string>
 
 </resources>
