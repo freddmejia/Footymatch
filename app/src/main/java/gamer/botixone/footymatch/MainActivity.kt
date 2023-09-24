@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import gamer.botixone.footymatch.ui.theme.FootyMatchTheme
+import gamer.botixone.footymatch.ui.theme.ui.MatrixText
 import gamer.botixone.footymatch.ui.theme.ui.app.FootMachScreen
 
 
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContent {
-            FootMachScreen()
+            MatrixText()
+            //FootMachScreen()
         }
         /*setContent {
             FootyMatchTheme {
