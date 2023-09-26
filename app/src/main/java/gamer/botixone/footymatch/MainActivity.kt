@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContent {
-            MatrixText()
-            //FootMachScreen()
+            //MatrixText()
+            FootMachScreen()
         }
         /*setContent {
             FootyMatchTheme {
