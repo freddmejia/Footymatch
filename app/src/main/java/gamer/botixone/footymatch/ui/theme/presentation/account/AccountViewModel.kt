@@ -1,5 +1,8 @@
 package gamer.botixone.footymatch.ui.theme.presentation.account
 
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,12 +11,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import gamer.botixone.footymatch.ui.theme.data.model.User
 import gamer.botixone.footymatch.ui.theme.domain.user.AccountUseCase
 import gamer.botixone.footymatch.ui.theme.utils.CompositionObj
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 import gamer.botixone.footymatch.ui.theme.utils.*
+import kotlinx.coroutines.flow.MutableStateFlow
+
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val accountUseCase: AccountUseCase
@@ -36,6 +42,10 @@ class AccountViewModel @Inject constructor(
     private val _compositionLogin = MutableStateFlow<Result<CompositionObj<User, String>>>(Result.Empty)
     val compositionLogin : StateFlow<Result<CompositionObj<User, String>>> = _compositionLogin
 
+    private val _isLoggedIn = MutableStateFlow(true)
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
+
+
     fun onLoginChange(email: String, password: String) {
         _email.value = email
         _password.value = password
@@ -46,6 +56,8 @@ class AccountViewModel @Inject constructor(
         _email.value = email
         _password.value = password
         _repeatPassword.value = repeatPassword
+
+
     }
 
     fun launchRegister(isNewUser: Boolean){
@@ -60,6 +72,7 @@ class AccountViewModel @Inject constructor(
 
     fun createAccount() = viewModelScope.launch {
         _isNewUser.value = false
+        _compositionLogin.value = Result.Loading
         _compositionLogin.value = accountUseCase.register(username = _name.value!!, email =  _email.value!!, password = _password.value!!, password2 = _repeatPassword.value!!)
         _isNewUser.value = true
     }
@@ -70,4 +83,12 @@ class AccountViewModel @Inject constructor(
         _compositionLogin.value = accountUseCase.login(_email.value!!, _password.value!!)
         _isNewUser.value = true
     }
+
+    fun setCompositionLigin(result: Result<CompositionObj<User, String>>) {
+        _compositionLogin.value = result
+    }
+    fun setIsLoggedIn(isLoggedI: Boolean) {
+        _isLoggedIn.value = isLoggedI
+    }
 }
+

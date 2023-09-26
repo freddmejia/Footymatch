@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,16 +23,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import gamer.botixone.footymatch.R
+import gamer.botixone.footymatch.ui.theme.presentation.account.AccountViewModel
 import gamer.botixone.footymatch.ui.theme.ui.account.ForgotPasswordScreen
 import gamer.botixone.footymatch.ui.theme.ui.account.LoginScreen
 import gamer.botixone.footymatch.ui.theme.ui.account.RegisterScreen
 import gamer.botixone.footymatch.ui.theme.ui.enumerates.FootMatchMenuScreen
+import gamer.botixone.footymatch.ui.theme.ui.menu.MenuAppFootyMatchScreen
 import gamer.botixone.footymatch.ui.theme.ui.viewmodel.LoginViewModel
 
 @ExperimentalComposeUiApi
@@ -39,10 +43,21 @@ import gamer.botixone.footymatch.ui.theme.ui.viewmodel.LoginViewModel
 @ExperimentalMaterialApi
 @Preview
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun FootMachScreen(
-    navController: NavHostController = rememberNavController()
-){
+    @Composable
+    fun FootMachScreen(
+        navController: NavHostController = rememberNavController(),
+        viewModel: AccountViewModel = hiltViewModel() // Inyecta el ViewModel
+
+    ){
+
+    val isLoggedIn by viewModel.isLoggedIn.collectAsState()
+
+    if (isLoggedIn) {
+        // El usuario está autenticado, navega a la pantalla deseada
+        navController.navigate(FootMatchMenuScreen.MenuApp.name)
+        return
+    }
+
     val TAG = "FootMachScreen";
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -82,13 +97,18 @@ fun FootMachScreen(
                 route = FootMatchMenuScreen.Register.name
             ){
                 Log.e(TAG, "FootMachScreen: register 22" )
-                RegisterScreen(LoginViewModel())
+                RegisterScreen()
             }
             composable(
                 route = FootMatchMenuScreen.ForgotPass.name
             ){
                 ForgotPasswordScreen()
             }
+            /*composable(
+                route = FootMatchMenuScreen.MenuApp.name
+            ){
+                MenuAppFootyMatchScreen()
+            }*/
         }
     }
 }

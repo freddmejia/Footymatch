@@ -42,13 +42,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import gamer.botixone.footymatch.ui.theme.data.model.User
 import gamer.botixone.footymatch.ui.theme.presentation.account.AccountViewModel
 import gamer.botixone.footymatch.ui.theme.ui.dialog.SimpleDialog
+import gamer.botixone.footymatch.ui.theme.ui.menu.MenuAppFootyMatchScreen
 import gamer.botixone.footymatch.ui.theme.ui.viewmodel.LoginViewModel
 import gamer.botixone.footymatch.ui.theme.utils.CompositionObj
 import gamer.botixone.footymatch.ui.theme.utils.Result
+
 
 
 @ExperimentalComposeUiApi
@@ -60,6 +63,7 @@ fun LoginScreen(
     viewModel: AccountViewModel = hiltViewModel(),
     registerOnClicked: () -> Unit,
     forgotPassOnClicked: () -> Unit,
+
 ) {
     Box(
         modifier = Modifier
@@ -95,9 +99,14 @@ fun Login(
 
     when(resultAccount){
         is Result.Success<CompositionObj<User, String>> -> {
-            Box(modifier = Modifier.fillMaxSize()){
+            //here
+            loginViewModel.setIsLoggedIn(isLoggedI = true)
+            /*loginViewModel.setIsLoggedIn(
+                isLoggedI = true
+            )*/
+            /*Box(modifier = Modifier.fillMaxSize()){
                 Text(text = "login succed")
-            }
+            }*/
         }
         is Result.Loading-> {
             Box(modifier = Modifier.fillMaxSize()){
@@ -116,60 +125,88 @@ fun Login(
             }
             if (showDialog){
                 SimpleDialog(
-                    onDismis = { showDialog = false },
-                    onConfirm = { showDialog = false },
+                    onDismis = {
+                        showDialog = false
+                        loginViewModel.setCompositionLigin(
+                            result = Result.Empty
+                        )
+                               },
+                    onConfirm = {
+                        showDialog = false
+                        loginViewModel.setCompositionLigin(
+                            result = Result.Empty
+                        )
+                                },
                     title = R.string.error,
                     message = (resultAccount as Result.Error).error
                 )
             }
             else {
-                Column(modifier = modifier) {
-                    HeaderImage(modifier = Modifier.align(Alignment.CenterHorizontally))
-                    EmailField(
-                        email = email,
-                        onTextFieldChange = {
-                            loginViewModel.onLoginChange(email = it, password = password)
-                        }
-                    )
-                    Spacer(modifier = Modifier.padding(bottom = 10.dp))
-                    PasswordField(
-                        password = password,
-                        onTextFieldChange = {
-                            loginViewModel.onLoginChange(email = email, password = it)
-                        }
-                    )
-                    Spacer(modifier = Modifier.padding(16.dp))
-                    SimpleButtonLogin(
-                        text = stringResource(id = R.string.login_button),
-                        buttonColors = ButtonDefaults.buttonColors(
-                            backgroundColor = colorResource(id = R.color.cello),
-                            disabledBackgroundColor = colorResource(id = R.color.wedgewood),
-                            contentColor = Color.White,
-                            disabledContentColor = Color.White,
-                        )
-                    ) {
-                        loginViewModel.LoginAccount()
-                    }
-                    Spacer(modifier = Modifier.padding(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        ForgotPasswordText(forgotPassOnClicked = {
-                            forgotPassOnClicked()
-                        })
-                        NewUserText(registerOnClicked = {
-                            registerOnClicked()
-                        })
-                    }
-
-                }
+                LoginForm(
+                    modifier = modifier,
+                    email = email,
+                    password = password,
+                    loginViewModel = loginViewModel,
+                    registerOnClicked = registerOnClicked,
+                    forgotPassOnClicked = forgotPassOnClicked
+                )
             }
         }
     }
 
 }
 
+@Composable
+fun LoginForm(
+    modifier: Modifier,
+    email: String,
+    password: String,
+    loginViewModel: AccountViewModel,
+    registerOnClicked: () -> Unit,
+    forgotPassOnClicked: () -> Unit
+) {
+    Column(modifier = modifier) {
+        HeaderImage(modifier = Modifier.align(Alignment.CenterHorizontally))
+        EmailField(
+            email = email,
+            onTextFieldChange = {
+                loginViewModel.onLoginChange(email = it, password = password)
+            }
+        )
+        Spacer(modifier = Modifier.padding(bottom = 10.dp))
+        PasswordField(
+            password = password,
+            onTextFieldChange = {
+                loginViewModel.onLoginChange(email = email, password = it)
+            }
+        )
+        Spacer(modifier = Modifier.padding(16.dp))
+        SimpleButtonLogin(
+            text = stringResource(id = R.string.login_button),
+            buttonColors = ButtonDefaults.buttonColors(
+                backgroundColor = colorResource(id = R.color.cello),
+                disabledBackgroundColor = colorResource(id = R.color.wedgewood),
+                contentColor = Color.White,
+                disabledContentColor = Color.White,
+            )
+        ) {
+            loginViewModel.LoginAccount()
+        }
+        Spacer(modifier = Modifier.padding(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ForgotPasswordText(forgotPassOnClicked = {
+                forgotPassOnClicked()
+            })
+            NewUserText(registerOnClicked = {
+                registerOnClicked()
+            })
+        }
+
+    }
+}
 @Composable
 fun HeaderImage(modifier: Modifier) {
     Image(
